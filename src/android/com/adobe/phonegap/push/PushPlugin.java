@@ -40,6 +40,11 @@ import me.leolin.shortcutbadger.ShortcutBadger;
 public class PushPlugin extends CordovaPlugin implements PushConstants {
 
   public static final String LOG_TAG = "Push_Plugin";
+    // TODO: temporary
+  static final String CHANNEL_ID_DEFAULT = "default-channel-id";
+
+  // TODO: temporary
+  private static final CharSequence CHANNEL_NAME_DEFAULT = "Default channel";
 
   private static CallbackContext pushContext;
   private static CordovaWebView gWebView;
@@ -158,11 +163,32 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
       try {
         options.put(CHANNEL_ID, DEFAULT_CHANNEL_ID);
         options.putOpt(CHANNEL_DESCRIPTION, "PhoneGap PushPlugin");
+        createDafaultChannel();
         createChannel(options);
+        
       } catch (JSONException e) {
         Log.e(LOG_TAG, "execute: Got JSON Exception " + e.getMessage());
       }
     }
+  }
+   @TargetApi(26)
+  private void createDafaultChannel(){
+
+    NotificationManager mgr = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+    if (SDK_INT < O)
+      return;
+
+    NotificationChannel channel = mgr.getNotificationChannel(CHANNEL_ID_DEFAULT);
+
+    if (channel != null)
+      return;
+
+    channel = new NotificationChannel(
+            CHANNEL_ID_DEFAULT, CHANNEL_NAME_DEFAULT, IMPORTANCE_DEFAULT);
+
+    mgr.createNotificationChannel(channel);
+
   }
 
   @Override
