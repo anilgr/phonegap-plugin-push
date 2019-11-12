@@ -190,6 +190,12 @@ public class PushPlugin extends CordovaPlugin implements PushConstants {
 
     channel = new NotificationChannel(
             CHANNEL_ID_DEFAULT, CHANNEL_NAME_DEFAULT, IMPORTANCE_DEFAULT);
+    AudioAttributes attributes = new AudioAttributes.Builder()
+             .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+             .build();
+
+
+    channel.setSound(android.provider.Settings.System.DEFAULT_NOTIFICATION_URI, attributes);
 
     mgr.createNotificationChannel(channel);
 
