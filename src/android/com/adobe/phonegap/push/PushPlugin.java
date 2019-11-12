@@ -37,6 +37,10 @@ import java.util.List;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.O;
+import static android.app.NotificationManager.IMPORTANCE_DEFAULT;
+
 public class PushPlugin extends CordovaPlugin implements PushConstants {
 
   public static final String LOG_TAG = "Push_Plugin";
